@@ -1,0 +1,8 @@
+[
+  { "code": "ENG", "name": "English" },
+  { "code": "MAT", "name": "Math" },
+  { "code": "SCI", "name": "Science" },
+  { "code": "SOC", "name": "Social Science" },
+  { "code": "PHE", "name": "Physical Education" },
+  { "code": "ART", "name": "Art" }
+]
