@@ -2,40 +2,59 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation'
-
-function LoginError() {
-  return (
-    <p className="text-red-500 flex flex-col text-sm mt-4">
-      <span>Username or password incorrect.</span>
-      <span>Username = testusername</span>
-      <span>Password = testpassword</span>
-    </p>
-  );
-}
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import Input from '../input/input';
 
 export default function Login() {
   const router = useRouter();
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [hasError, setHasError] = React.useState(false);
+
+  const USERNAME = 'testusername';
+  const PASSWORD = 'testpassword';
 
   const onSubmit = () => {
-    setHasError(username !== 'testusername' || password !== 'testpassword');
-    if (!hasError) {
-      router.push('/course-list');
-    }
+    router.push('/course-list');
   };
 
   return (
-    <div className="p-4 rounded-lg border-[1px] border-blue-50 border-opacity-25">
+    <div className="p-4 rounded-lg border-[1px] border-blue-50 border-opacity-25 min-w-80">
       <h1 className="text-2xl mb-4">Login</h1>
-      <form className="flex flex-col justify-start items-start gap-4" action={onSubmit}>
-        <input className="text-black p-2" placeholder="testusername" value={username} onChange={(event) => setUsername(event.target.value)} />
-        <input className="text-black p-2" placeholder="testpassword" value={password} onChange={(event) => setPassword(event.target.value)} type="password" />
-        <button type="submit" className="border-2 border-l-[1px] border-t-[1px] border-blue-50/25 w-full">Login</button>
-      </form>
 
-      { hasError ? <LoginError /> : ''}
+      <Formik
+        initialValues={{username: '', password: ''}}
+        validationSchema={Yup.object({
+          username: Yup.string()
+            .required('Username is required')
+            .equals([USERNAME], `Username should be ${USERNAME}`),
+          password: Yup.string()
+            .required('Password is required')
+            .equals([PASSWORD], `Password should be ${PASSWORD}`)
+        })}
+        onSubmit={onSubmit}
+        className="flex flex-col justify-start items-start gap-6"
+      >
+        <Form className="flex flex-col gap-6">
+          <Input
+            label="Username"
+            name="username"
+            placeholder={USERNAME}
+            required
+          />
+
+          <Input
+            type='password'
+            label='Password'
+            name='password'
+            placeholder={PASSWORD}
+            required
+          />
+          
+          <button type="submit" className='flex flex-row justify-center items-center gap-2 mt-4'>
+            <span className="material-symbols-outlined">login</span>
+            <span>Login</span>
+          </button>
+        </Form>
+      </Formik>
     </div>
   );
 }

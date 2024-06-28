@@ -18,9 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+      </head>
+      <body className={'grid grid-rows-[74px_auto_200px] min-h-[calc(100svh_-_8px)] dark ' + inter.className}>
         <Header />
-        <main className="flex min-h- flex-col items-center justify-between p-24">{children}</main>
+        <main className="flex min-h- flex-col items-center justify-between py-24 px-4 sm:px-24">{children}</main>
         <Footer />
       </body>
     </html>

@@ -31,3 +31,80 @@ body {
     text-wrap: balance;
   }
 }
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+button {
+  background-color: theme('colors.blue.500');
+  border-radius: 4px;
+  color: theme('colors.white');
+  padding: 4px 16px;
+  position: relative;
+  transition: all 150ms;
+  
+  &::before{
+    content: '';
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: theme('colors.blue.500');
+    transition: all 150ms;
+  }
+
+  &:hover,
+  &:active {
+    &::before {
+      left: -3px;
+      right: -3px;
+      top: -3px;
+      bottom: -3px;
+    }
+  }
+
+  &:hover {
+    background-color: theme('colors.blue.600');
+  
+      &::before {
+        border-color: theme('colors.blue.600');
+      }
+  }
+
+  &:active {
+    background-color: theme('colors.blue.700');
+  
+    &::before {
+      border-color: theme('colors.blue.700');
+    }
+  }
+}
+
+input {
+  background-color: theme('colors.gray.700');
+  border-color: theme('colors.gray.700');
+  border-radius: 4px;;
+  border-style: solid;
+  border-width: 2px;
+  padding: 8px 16px;
+  outline: none;
+
+  &:hover {
+    border-color: theme('colors.gray.500');
+  }
+  &:focus {
+    border-color: theme('colors.blue.500');
+  }
+  &.error {
+    border-color: theme('colors.red.500');
+  }
+}
