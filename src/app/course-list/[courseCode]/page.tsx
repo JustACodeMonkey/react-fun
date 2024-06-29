@@ -120,7 +120,8 @@ export default function CourseCode({ params }: { params: { courseCode: string }}
   const [timerId, setTimerId] = React.useState(-1);
 
   React.useEffect(() => {
-    fetch('/data/students.json?courseCode=' + params.courseCode)
+    const abortController = new AbortController();
+    fetch('/data/students.json?courseCode=' + params.courseCode, { signal: abortController.signal })
       .then(response => response.json())
       .then((data: IStudent[]) => setStudents(
         data.filter(student => student.code === params.courseCode).map(student => ({
@@ -129,6 +130,8 @@ export default function CourseCode({ params }: { params: { courseCode: string }}
           ...student,
         }))
       ));
+    
+    return () => abortController.abort();
   }, [params.courseCode]); // Run when the course code changes to get the new data (real data wouldn't be in json like this)
 
   const showSaveMessage = (msg: string) => {

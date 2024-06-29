@@ -38,9 +38,12 @@ export default function CourseList() {
   // If useEffect returns an arrow function, it acts the same as the componentWillUnmount lifecycle hook (so we can clean up if needed)
   // If the deps array has a changing value in it, then useEffect acts like the componentDidUpdate lifecycle hook
   React.useEffect(() => {
-    fetch('/data/courses.json')
+    const abortController = new AbortController();
+    fetch('/data/courses.json', { signal: abortController.signal })
       .then(response => response.json())
-      .then(data => setCourses(data))
+      .then(data => setCourses(data));
+    
+    return () => abortController.abort();
   }, []);
 
   return (
